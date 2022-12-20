@@ -12,6 +12,7 @@ RAII(资源的获得即初始化) : 资源获取后立即放进管理对象; 管
 利用RAII机制, 可以实现智能指针来包裹起裸指针,智能指针是栈上的本地变量, 从而安全使用
 下面是一个RAII实现简易版智能指针的例子
 
+
 */
 
 
@@ -58,3 +59,20 @@ int main()
     std::cout << "hello, modern c++" << std::endl;
     return 0; 
 }
+
+/*
+RAII机制不仅可以用来管理内存, 还能关闭文件、释放锁等等
+std::mutex mtx;
+void some_func() 
+{
+    mtx.lock();
+    ....
+    ....
+    mtx.unlock(); 
+    上述是错误的,因为如果中间发生异常或者提前返回, 锁不会被释放
+    
+    应该利用RAII机制,用一个本地变量管理这个全局的锁
+    std::lock_guard<std::mutex> guard(mtx);
+}
+*/
+
